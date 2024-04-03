@@ -1,0 +1,44 @@
+searchPerson
+searchPerson
+searchPerson
+searchPerson
+searchPerson
+searchPerson
+searchPerson
+searchPerson
+searchPerson -> getCoauthors
+searchPerson -> getCoauthors
+searchPerson -> getCoauthors
+searchPerson -> getCoauthors
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonPubs
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getPersonBasicInfo
+searchPerson -> getCoauthors -> searchPerson
+searchPerson -> getCoauthors -> searchPerson
+searchPerson -> getCoauthors -> searchPerson
+searchPerson -> getCoauthors -> searchPerson
+searchPerson -> getCoauthors -> searchPerson
+searchPerson -> getCoauthors -> searchPerson
+searchPerson -> getCoauthors -> getCoauthors
+searchPerson -> getCoauthors -> getCoauthors
+searchPerson -> getPersonPubs -> getPublication
+searchPerson -> getPersonPubs -> getPublication
+searchPerson -> getPersonPubs -> getPublication
+searchPerson -> getPersonPubs -> getPublication
+searchPerson -> getPersonPubs -> getPublication
+searchPerson -> getPersonPubs -> getPublication
