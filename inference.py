@@ -169,19 +169,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # interaction()
-
-    # with open('./results/v5_codellama/result.txt', 'r') as f:
-    #     content = f.read()
-    #     score_list = content.split('\n')
-    #     f_score_list = [float(score) for score in score_list]
-    #     avg = sum(f_score_list) / len(score_list)
-    #     print(avg)
-
-    # for epoch in range(18):
-    #     acc, score_list = acc_score(epoch)
-    #     with jsonlines.open('./results/chatglm/result{}.jsonl'.format(epoch), 'w') as f:
-    #         for item in score_list:
-    #             f.write(item)
-    #         f.close()
-        

@@ -9,7 +9,10 @@ def wrapUrlParameter(url, **kwargs):
 
 class aminer:
     def __init__(self):
-        self.appcode = 'a91261de745c4db8b85f08b42d1265f3'
+        with open("config/amienr_config.json", 'r') as f:
+            config_dict = f.read()
+            f.close()
+        self.appcode = config_dict['appcode']
     
     def searchPerson(self, name):
         personList = []

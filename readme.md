@@ -11,5 +11,5 @@ python api.py
 ```
 ### SoAyBench or Terminal Interaction
 ```
-python inference.py
+bash inference.sh
 ```
