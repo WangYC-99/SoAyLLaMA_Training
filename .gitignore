@@ -3,3 +3,4 @@ flasklog
 config/aminer_config.json
 example.txt
 outputs.txt
+config/inference_config.json

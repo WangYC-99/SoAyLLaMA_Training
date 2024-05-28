@@ -5,19 +5,6 @@ from aminer_env import *
 import os
 import time
 
-# prompts = [
-#     "Could you name a few researchers at OpenAI?",
-#     "How many papers has Yann Lecun published?",
-#     "How many citations does Neel Sundaresan from Microsoft have?",
-#     "List some collaborators of Jing Zhang at Renmin University of China.",
-#     "What's the seminal work of Jifan Yu from Tsinghua University?",
-#     "Could you suggest some papers about knowledge graph?",
-#     "Which research institution is Andrew Ng currently affiliated with?"
-# ]
-
-# prompts = [
-#     "Could you name a few researchers at OpenAI?"
-# ]
 def route_extractor(string):
     match = re.search(r'Route:\n(.*?)\n-----\n', string, re.DOTALL)
     if match:
@@ -79,17 +66,16 @@ def code_gen_llm(prompts, llm):
 
     return generated_txt_list, end_time - bg_time
 
-    # with jsonlines.open('./results/codellama13b/{}.jsonl'.format(epoch), 'w') as f:
-    #     for each in outputs:
-    #         generated_text = each.outputs[0].text
-    #         f.write({'generated_text' : generated_text})
-    #     f.close()
+def interaction(inference_config_dict):   
 
-def interaction():
-    # llm_name = 'AMinerS_v5_codellama-13b-instruct_bs4-4'
+    llm_name = inference_config_dict['llm_name']
+    save_path = inference_config_dict['save_path']
+    checkpoint_iteration = inference_config_dict['checkpoint_iteration']
+    test_dataset_path = inference_config_dict['test_dataset_path']
     llm_name = 'soayllama_v2_7b'
 
-    llm = LLM(model="/data/wangyuanchun/AMinerS/output/{}/checkpoint-1500".format(llm_name), tensor_parallel_size=1)
+    llm = LLM(model="{}/{}/checkpoint-{}".format(save_path, llm_name, checkpoint_iteration), tensor_parallel_size=1)
+
     
     while(True):
         prompt = input('Please input your question here (e for exit, r for rewrite):\n')
@@ -107,46 +93,21 @@ def interaction():
     
     print('thanks for using.')
 
-# def acc_score(epoch):
 
-#     answer_list = []
-#     with jsonlines.open('/data/wangyuanchun/AMinerS/soayBench_v1-2-1/{}.jsonl'.format(epoch), 'r') as f:
-#         for line in f:
-#             prompts.append(line['Query_en'])
-#             answer_list.append(line['Answer'])
+def main(inference_config_dict):
 
-#     code_list = []
-#     with jsonlines.open('./results/codellama13b/{}.jsonl'.format(epoch), 'r') as f:
-#         for line in f:
-#             code_list.append(match_after_newline(line['generated_text']))
-#         f.close()
+    llm_name = inference_config_dict['llm_name']
+    save_path = inference_config_dict['save_path']
+    checkpoint_iteration = inference_config_dict['checkpoint_iteration']
+    test_dataset_path = inference_config_dict['test_dataset_path']
 
-#     acc = 0
-
-#     result_list = []
-
-#     for i, code in enumerate(code_list):
-#         result = code_execution(code)
-#         answer = answer_list[i]
-#         print('query_id: {}, result: {}, answer: {}'.format(i, result, answer))
-#         if result == answer:
-#             acc += 1
-#         result_list.append({'result' : result, 'answer' : answer, 'is_correct' : result == answer, 'code' : code})
-#     acc = acc / len(code_list)
-
-#     print(acc)
-#     return acc, result_list
-
-def main():
-    llm_name = 'soayllama_v2_7b'
-
-    llm = LLM(model="/data/wangyuanchun/AMinerS/output/{}/checkpoint-1500".format(llm_name), tensor_parallel_size=1)
+    llm = LLM(model="{}/{}/checkpoint-{}".format(save_path, llm_name, checkpoint_iteration), tensor_parallel_size=1)
     # llm = 'debug'
 
     for epoch_iterator in range(18):
 
         query_dict_list = []
-        with jsonlines.open('/data/wangyuanchun/AMinerS/soayBench_v1-2-1/{}.jsonl'.format(epoch_iterator), 'r') as f:
+        with jsonlines.open('{}/{}.jsonl'.format(test_dataset_path, epoch_iterator), 'r') as f:
             for line in f:
                 query_dict_list.append(line)
 
@@ -168,4 +129,11 @@ def main():
                 f.close()
 
 if __name__ == '__main__':
-    main()
+    with open('config/inference_config.json', 'r') as f:
+        inference_config_dict = json.load(f)
+        f.close()
+
+    if inference_config_dict['inference_mode'] == 'interaction':
+        interaction(inference_config_dict)
+    else:
+        main(inference_config_dict)
